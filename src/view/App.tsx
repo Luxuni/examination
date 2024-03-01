@@ -1,21 +1,15 @@
-import { Button } from 'antd';
 import React from 'react';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import CodeHeighlighter from './components/CodeHighlighter';
 import { selectUnikey } from './features/unikeySlice';
-import { useAppSelector, useCodeMessage } from './hooks';
+import { useAppSelector, useCodeMessage, useDarkReader } from './hooks';
 
 const App: React.FC = () => {
   useCodeMessage();
+  useDarkReader();
   const unikey = useAppSelector(selectUnikey);
-  console.log(unikey);
-
   return (
     <div className="App">
-      <Button type="primary">Button</Button>
-      <SyntaxHighlighter language="javascript" style={docco}>
-        {unikey}
-      </SyntaxHighlighter>
+      <CodeHeighlighter code={unikey} />
     </div>
   );
 };

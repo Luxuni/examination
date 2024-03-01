@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react';
 import { Button } from 'antd';
+import React from 'react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { selectUnikey } from './features/unikeySlice';
+import { useAppSelector, useCodeMessage } from './hooks';
 
 const App: React.FC = () => {
-  const [text, setText] = useState('');
-  useEffect(() => {
-    window.addEventListener('message', (event) => {
-      const message = event.data;
-      if (message.text) {
-        setText(message.text);
-      }
-    });
-    return () => {
-      window.removeEventListener('message', () => {});
-    };
-  }, []);
+  useCodeMessage();
+  const unikey = useAppSelector(selectUnikey);
+  console.log(unikey);
+
   return (
     <div className="App">
       <Button type="primary">Button</Button>
-      <div>{text}</div>
+      <SyntaxHighlighter language="javascript" style={docco}>
+        {unikey}
+      </SyntaxHighlighter>
     </div>
   );
 };

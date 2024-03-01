@@ -49,6 +49,7 @@
     "@types/node": "18.x",
     "@types/react": "^18.2.60",
     "@types/react-dom": "^18.2.19",
+    "@types/react-syntax-highlighter": "^15.5.11",
     "@types/vscode": "^1.86.0",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
@@ -65,8 +66,12 @@
     "webpack-merge": "^5.10.0"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.1",
     "antd": "^5.14.2",
+    "darkreader": "^4.9.79",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-redux": "^9.1.0",
+    "react-syntax-highlighter": "^15.5.0"
   }
 }

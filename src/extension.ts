@@ -27,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
-
+  let panel: vscode.WebviewPanel | undefined;
   let selectText = vscode.commands.registerCommand(
     'examination.selectText',
     () => {
@@ -35,15 +35,21 @@ export function activate(context: vscode.ExtensionContext) {
       if (editor) {
         const selection = editor.selection;
         const text = editor.document.getText(selection);
-        let panel = vscode.window.createWebviewPanel(
-          'examinationView',
-          'Examination View',
-          vscode.ViewColumn.Two,
-          {
-            retainContextWhenHidden: true,
-            enableScripts: true,
-          },
-        );
+        if (!panel) {
+          panel = vscode.window.createWebviewPanel(
+            'examinationView',
+            'Examination View',
+            vscode.ViewColumn.Two,
+            {
+              retainContextWhenHidden: true,
+              enableScripts: true,
+            },
+          );
+        }
+        // 监听panel的关闭事件
+        panel.onDidDispose(() => {
+          panel = undefined;
+        });
         const isProduction =
           context.extensionMode === vscode.ExtensionMode.Production;
         let srcUrl = '';
@@ -63,8 +69,8 @@ export function activate(context: vscode.ExtensionContext) {
             switch (message.command) {
               case 'reload':
                 const nonce = new Date().getTime() + '';
-                panel.webview.html = getWebviewContent(srcUrl, nonce);
-                panel.webview.postMessage({ text });
+                panel!.webview.html = getWebviewContent(srcUrl, nonce);
+                panel!.webview.postMessage({ text });
                 vscode.window.showInformationMessage(message.text);
                 return;
             }

@@ -6,6 +6,19 @@ module.exports = merge(baseConfig, {
   mode: 'development',
   devtool: 'source-map',
   entry: ['./webpack-hot-dev-server.js', './src/view/index.tsx'],
+  module: {
+    rules: [
+      // ...
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          'postcss-loader',
+        ],
+      },
+    ],
+  },
   devServer: {
     port: 3000,
     client: {

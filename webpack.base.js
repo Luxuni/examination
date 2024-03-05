@@ -12,18 +12,23 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.(ts|tsx)$/, 
+        test: /.(ts|tsx)$/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              '@babel/preset-react',
-              '@babel/preset-typescript'
-            ]
-          }
-        }
-      }
-    ]
+            presets: ['@babel/preset-react', '@babel/preset-typescript'],
+          },
+        },
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          'postcss-loader',
+        ],
+      },
+    ],
   },
   resolve: {
     extensions: ['.js', '.tsx', '.ts'],
@@ -31,7 +36,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './src/view/index.html'),
-      inject: true, 
+      inject: true,
     }),
   ],
 };

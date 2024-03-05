@@ -8,7 +8,7 @@ const App: React.FC = () => {
   useDarkReader();
   const unikey = useAppSelector(selectUnikey);
   return (
-    <div className="App">
+    <div className="h-screen bg-white App">
       <CodeHeighlighter code={unikey} />
     </div>
   );

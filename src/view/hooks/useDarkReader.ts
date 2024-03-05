@@ -11,8 +11,9 @@ const useDarkReader = () => {
       if (theme === 'vscode-dark') {
         enable({
           brightness: 100,
-          contrast: 90,
+          contrast: 100,
           sepia: 10,
+          darkSchemeBackgroundColor: '#0F0F0F',
         });
       } else if (theme === 'vscode-light') {
         disable();

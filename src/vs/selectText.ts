@@ -37,7 +37,7 @@ const CreateExamView = (
           );
           srcUrl = panel.webview.asWebviewUri(filePath).toString();
         } else {
-          srcUrl = 'http://localhost:3000/static/js/main.js';
+          srcUrl = 'http://localhost:4000/static/js/main.js';
         }
         panel.webview.html = getWebviewContent(srcUrl);
         panel!.webview.postMessage({ text });

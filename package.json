@@ -26,6 +26,16 @@
           "group": "navigation"
         }
       ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "examination",
+      "properties": {
+        "examination.username": {
+          "type": "string",
+          "description": "The username to use when making API requests"
+        }
+      }
     }
   },
   "scripts": {
@@ -78,6 +88,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.0",
+    "react-router-dom": "^6.22.3",
     "react-syntax-highlighter": "^15.5.0"
   }
 }

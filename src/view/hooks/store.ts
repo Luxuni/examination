@@ -1,8 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import unikeyReducer from '../features/unikeySlice';
+import userReducer from '../features/userSlice';
 export function makeStore() {
   return configureStore({
-    reducer: { unikey: unikeyReducer },
+    reducer: { unikey: unikeyReducer, user: userReducer },
   });
 }
 

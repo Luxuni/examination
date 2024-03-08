@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { changeUnikey } from '../features/unikeySlice';
 import { useAppDispatch } from '.';
+import { changeUsername } from '../features/userSlice';
 
 const useCodeMessage = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +18,10 @@ const useCodeMessage = () => {
       }
       if (message.text) {
         dispatch(changeUnikey(message.text));
+      }
+      if (message.username) {
+        console.log('username:', message.username);
+        dispatch(changeUsername(message.username));
       }
     });
     return () => {

@@ -21,7 +21,7 @@ module.exports = merge(baseConfig, {
     static: {
       directory: path.join(__dirname, './src/view/public'),
     },
-    watchFiles: ['src/view/**/*'], // 添加这一行
+    watchFiles: ['src/view/**/*'],
     allowedHosts: 'all',
     headers: {
       'Access-Control-Allow-Origin': '*',

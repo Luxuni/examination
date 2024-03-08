@@ -39,7 +39,11 @@ const CreateExamView = (
         } else {
           srcUrl = 'http://localhost:4000/static/js/main.js';
         }
+        const config = vscode.workspace.getConfiguration('examination');
+        const username = config.get('username');
         panel.webview.html = getWebviewContent(srcUrl);
+        // send user message to webview
+        panel!.webview.postMessage({ username });
         panel!.webview.postMessage({ text });
         // 接收来自webview的消息
         panel.webview.onDidReceiveMessage(
@@ -52,6 +56,7 @@ const CreateExamView = (
                 vscode.window.showInformationMessage(message.text);
                 return;
               case 'already':
+                panel!.webview.postMessage({ username });
                 panel!.webview.postMessage({ text });
                 vscode.window.showInformationMessage(message.text);
                 return;

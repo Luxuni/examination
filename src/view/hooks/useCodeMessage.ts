@@ -6,7 +6,6 @@ import { changeUsername } from '../features/userSlice';
 const useCodeMessage = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    // 给vscode发送消息
     window.addEventListener('message', (event) => {
       const message = event.data;
       if (message.type === 'webpackOk') {

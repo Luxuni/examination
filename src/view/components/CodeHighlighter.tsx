@@ -1,3 +1,4 @@
+import { Card } from 'antd';
 import React from 'react';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
@@ -8,9 +9,11 @@ const CodeHeighlighter: React.FC<{ code: string }> = ({ code }) => {
     SyntaxHighlighter.registerLanguage('javascript', js);
   }, []);
   return (
-    <SyntaxHighlighter language="javascript" style={github}>
-      {code}
-    </SyntaxHighlighter>
+    <Card bordered={false} hoverable>
+      <SyntaxHighlighter style={github} className="max-h-96 overflow-scroll">
+        {code}
+      </SyntaxHighlighter>
+    </Card>
   );
 };
 

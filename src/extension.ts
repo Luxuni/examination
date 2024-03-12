@@ -3,7 +3,11 @@
 import * as vscode from 'vscode';
 import CreateExamView from './vs/selectText';
 
-function getWebviewContent(srcUri: string, nonce: string = '') {
+function getWebviewContent(
+  srcUri: string,
+  vendorsUri: string,
+  nonce: string = '',
+) {
   return `<!doctype html>
   <html lang="en">
   <head>
@@ -11,6 +15,7 @@ function getWebviewContent(srcUri: string, nonce: string = '') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>webview-react</title>
+    <script defer="defer" src="${vendorsUri}"></script>
     <script nonce="${nonce}" defer="defer" src="${srcUri}"></script>
   </head>
   <body>

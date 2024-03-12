@@ -1,9 +1,13 @@
-import * as vscode from 'vscode';
 import path from 'node:path';
+import * as vscode from 'vscode';
 
 const CreateExamView = (
   context: vscode.ExtensionContext,
-  getWebviewContent: (srcUrl: string, nonce?: string) => string,
+  getWebviewContent: (
+    srcUrl: string,
+    vendorsUri: string,
+    nonce?: string,
+  ) => string,
 ) => {
   let panel: vscode.WebviewPanel | undefined;
   let selectText = vscode.commands.registerCommand(
@@ -31,17 +35,22 @@ const CreateExamView = (
         const isProduction =
           context.extensionMode === vscode.ExtensionMode.Production;
         let srcUrl = '';
+        let vendorsUri = '';
         if (isProduction) {
           const filePath = vscode.Uri.file(
             path.join(context.extensionPath, 'dist', 'static/js/main.js'),
           );
           srcUrl = panel.webview.asWebviewUri(filePath).toString();
+          const vendorsPath = vscode.Uri.file(
+            path.join(context.extensionPath, 'dist', 'static/js/vendors.js'),
+          );
         } else {
           srcUrl = 'http://localhost:4000/static/js/main.js';
+          vendorsUri = 'http://localhost:4000/static/js/vendors.js';
         }
         const config = vscode.workspace.getConfiguration('examination');
         const username = config.get('username');
-        panel.webview.html = getWebviewContent(srcUrl);
+        panel.webview.html = getWebviewContent(srcUrl, vendorsUri);
         // send user message to webview
         panel!.webview.postMessage({ username });
         panel!.webview.postMessage({ text });
@@ -51,7 +60,11 @@ const CreateExamView = (
             switch (message.command) {
               case 'reload':
                 const nonce = new Date().getTime() + '';
-                panel!.webview.html = getWebviewContent(srcUrl, nonce);
+                panel!.webview.html = getWebviewContent(
+                  srcUrl,
+                  vendorsUri,
+                  nonce,
+                );
                 panel!.webview.postMessage({ text });
                 vscode.window.showInformationMessage(message.text);
                 return;

@@ -2,7 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: path.join(__dirname, './src/view/index.tsx'), // 入口文件
+  entry: [
+    path.join(__dirname, './webpack-hot-dev-server.js'),
+    path.join(__dirname, './src/view/index.tsx'),
+  ], // 入口文件
   output: {
     filename: 'static/js/[name].js',
     path: path.join(__dirname, './dist'),

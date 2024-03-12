@@ -5,7 +5,6 @@ const baseConfig = require('./webpack.base.js');
 module.exports = merge(baseConfig, {
   mode: 'development',
   devtool: 'source-map',
-  entry: ['./webpack-hot-dev-server.js', './src/view/index.tsx'],
   devServer: {
     port: 4000,
     client: {

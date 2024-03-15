@@ -1,21 +1,34 @@
 {
   "name": "examination",
   "displayName": "examination",
-  "description": " Code review plugin",
   "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.86.0"
-  },
+  "description": " Code review plugin",
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
   "main": "./dist/extension.js",
+  "scripts": {
+    "build": "webpack -c webpack.prod.js",
+    "compile": "webpack",
+    "compile-tests": "tsc -p . --outDir out",
+    "dev": "webpack-dev-server -c webpack.dev.js",
+    "lint": "eslint src --ext ts",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "test": "vscode-test",
+    "vscode:prepublish": "pnpm run build && pnpm run package",
+    "watch": "webpack --watch",
+    "watch-tests": "tsc -p . -w --outDir out"
+  },
   "contributes": {
     "commands": [
       {
         "command": "examination.selectText",
         "title": "Select Text"
+      },
+      {
+        "command": "examination.myCommand",
+        "title": "User Command"
       }
     ],
     "menus": {
@@ -28,28 +41,27 @@
       ]
     },
     "configuration": {
-      "type": "object",
-      "title": "examination",
+      "title": "Examination Settings",
       "properties": {
-        "examination.username": {
-          "type": "string",
-          "description": "The username to use when making API requests"
+        "examination.message": {
+          "type": "object",
+          "default": {},
+          "description": "examination message."
         }
       }
     }
   },
-  "scripts": {
-    "vscode:prepublish": "pnpm run build && pnpm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "vscode-test",
-    "dev": "webpack-dev-server -c webpack.dev.js",
-    "build": "webpack -c webpack.prod.js"
+  "activationEvents": [],
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.2.1",
+    "antd": "^5.14.2",
+    "darkreader": "^4.9.79",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^9.1.0",
+    "react-router-dom": "^6.22.3",
+    "react-syntax-highlighter": "^15.5.0",
+    "webpack-bundle-analyzer": "^4.10.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
@@ -83,15 +95,7 @@
     "webpack-dev-server": "^5.0.2",
     "webpack-merge": "^5.10.0"
   },
-  "dependencies": {
-    "@reduxjs/toolkit": "^2.2.1",
-    "antd": "^5.14.2",
-    "darkreader": "^4.9.79",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "^9.1.0",
-    "react-router-dom": "^6.22.3",
-    "react-syntax-highlighter": "^15.5.0",
-    "webpack-bundle-analyzer": "^4.10.1"
+  "engines": {
+    "vscode": "^1.86.0"
   }
 }

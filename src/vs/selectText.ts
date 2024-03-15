@@ -49,10 +49,10 @@ const CreateExamView = (
           vendorsUri = 'http://localhost:4000/static/js/vendors.js';
         }
         const config = vscode.workspace.getConfiguration('examination');
-        const username = config.get('username');
+        const userMessage = config.get('message');
         panel.webview.html = getWebviewContent(srcUrl, vendorsUri);
         // send user message to webview
-        panel!.webview.postMessage({ username });
+        panel!.webview.postMessage({ userMessage });
         panel!.webview.postMessage({ text });
         // 接收来自webview的消息
         panel.webview.onDidReceiveMessage(
@@ -69,7 +69,7 @@ const CreateExamView = (
                 vscode.window.showInformationMessage(message.text);
                 return;
               case 'already':
-                panel!.webview.postMessage({ username });
+                panel!.webview.postMessage({ userMessage });
                 panel!.webview.postMessage({ text });
                 vscode.window.showInformationMessage(message.text);
                 return;

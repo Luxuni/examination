@@ -54,6 +54,7 @@
   "activationEvents": [],
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.1",
+    "ahooks": "^3.7.10",
     "antd": "^5.14.2",
     "darkreader": "^4.9.79",
     "react": "^18.2.0",
@@ -61,6 +62,7 @@
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.3",
     "react-syntax-highlighter": "^15.5.0",
+    "umi-request": "^1.4.0",
     "webpack-bundle-analyzer": "^4.10.1"
   },
   "devDependencies": {

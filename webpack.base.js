@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: [
     path.join(__dirname, './webpack-hot-dev-server.js'),
@@ -57,6 +57,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './src/view/index.html'),
       inject: true,
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'README.md', to: 'README.md' },
+        { from: 'LICENSE', to: 'LICENSE' },
+      ],
     }),
   ],
 };

@@ -7,7 +7,12 @@ const url = {
 };
 
 const getUserList = () => {
-  return request.get(url.getUserList);
+  return request.get<
+    {
+      name: string;
+      userId: number;
+    }[]
+  >(url.getUserList);
 };
 
 export { getUserList };

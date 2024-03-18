@@ -28,7 +28,7 @@ const App: React.FC = () => {
       <Link to="/about">About</Link>
       <h2 className="text-2xl font-black text-center py-4">Hi!{username}</h2>
       <CodeHeighlighter code={unikey} />
-      {userList?.map((item: any) => (
+      {userList.map((item) => (
         <div key={item.userId} className="text-lg font-bold">
           {item.name}
         </div>

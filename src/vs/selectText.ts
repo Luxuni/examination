@@ -4,8 +4,8 @@ import * as vscode from 'vscode';
 const CreateExamView = (
   context: vscode.ExtensionContext,
   getWebviewContent: (
-    srcUrl: string,
-    vendorsUri: string,
+    srcUrl: string | vscode.Uri,
+    vendorsUri: string | vscode.Uri,
     nonce?: string,
   ) => string,
 ) => {
@@ -34,8 +34,8 @@ const CreateExamView = (
         });
         const isProduction =
           context.extensionMode === vscode.ExtensionMode.Production;
-        let srcUrl = '';
-        let vendorsUri = '';
+        let srcUrl: string | vscode.Uri = '';
+        let vendorsUri: string | vscode.Uri = '';
         if (isProduction) {
           const filePath = vscode.Uri.file(
             path.join(context.extensionPath, 'dist', 'static/js/main.js'),
@@ -44,6 +44,7 @@ const CreateExamView = (
           const vendorsPath = vscode.Uri.file(
             path.join(context.extensionPath, 'dist', 'static/js/vendors.js'),
           );
+          vendorsUri = panel.webview.asWebviewUri(vendorsPath).toString();
         } else {
           srcUrl = 'http://localhost:4000/static/js/main.js';
           vendorsUri = 'http://localhost:4000/static/js/vendors.js';
@@ -52,8 +53,8 @@ const CreateExamView = (
         const userMessage = config.get('message');
         panel.webview.html = getWebviewContent(srcUrl, vendorsUri);
         // send user message to webview
-        panel!.webview.postMessage({ userMessage });
-        panel!.webview.postMessage({ text });
+        panel.webview.postMessage({ userMessage });
+        panel.webview.postMessage({ text });
         // 接收来自webview的消息
         panel.webview.onDidReceiveMessage(
           (message) => {

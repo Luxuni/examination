@@ -29,9 +29,15 @@ const CreateExamView = (
           );
         }
         // 监听panel的关闭事件
-        panel.onDidDispose(() => {
-          panel = undefined;
-        });
+        panel.onDidDispose(
+          () => {
+            panel = undefined;
+            // 关闭所有的定时器
+            vscode.window.showInformationMessage('关闭');
+          },
+          null,
+          context.subscriptions,
+        );
         const isProduction =
           context.extensionMode === vscode.ExtensionMode.Production;
         let srcUrl: string | vscode.Uri = '';

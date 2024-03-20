@@ -1,10 +1,9 @@
-import React from 'react';
-import App from '../App';
+import Review from '../pages/review';
 
 const routerConfig = [
   {
     path: '/',
-    element: <App />,
+    element: <Review />,
   },
   {
     path: 'about',

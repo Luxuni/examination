@@ -12,7 +12,6 @@ const useCodeMessage = () => {
         dispatch(changeUnikey(message.text));
       }
       if (message.userMessage) {
-        console.log('userMessage:', message.userMessage);
         dispatch(changeUsername(message.userMessage));
       }
     });

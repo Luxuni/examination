@@ -30,7 +30,7 @@ const CodeHeighlighter: React.FC<{ code: string } & CardProps> = ({
     SyntaxHighlighter.registerLanguage('javascript', js);
   }, []);
   React.useEffect(() => {
-    const generator = characterGenerator(code, 4);
+    const generator = characterGenerator(code,2);
 
     async function handleNext() {
       for (let value of generator) {

@@ -4,30 +4,16 @@ import React from 'react';
 import CodeHeighlighter from '../../components/CodeHighlighter';
 import { selectUnikey } from '../../features/unikeySlice';
 import { useAppSelector } from '../../hooks';
-import { getCodeList, getUserList } from '../../services';
+import { createResource } from '../../resource';
+import { getUserList } from '../../services';
 const { TextArea } = Input;
+
+const resource = createResource(getUserList());
+
 const App: React.FC = () => {
   const unikey = useAppSelector(selectUnikey);
-  const [userList, setUserList] = React.useState<
-    {
-      name: string;
-      userId: number;
-    }[]
-  >([]);
-  const [codeList, setCodeList] = React.useState<
-    {
-      code: string;
-      codeId: number;
-    }[]
-  >([]);
-  useAsyncEffect(async () => {
-    const data = await getUserList();
-    setUserList(data);
-    // const codeData = await getCodeList();
-    // console.log(codeData);
-
-    // setCodeList(codeData);
-  }, []);
+  const userList = resource.read();
+  useAsyncEffect(async () => {}, []);
   return (
     <div className="flex flex-col gap-4">
       <CodeHeighlighter hoverable bordered={false} code={unikey} />
@@ -41,7 +27,7 @@ const App: React.FC = () => {
           </Form.Item>
           <Form.Item label="作者">
             <Select>
-              {userList.map((v, i) => (
+              {userList?.map((v, i) => (
                 <Select.Option value={v.userId} key={v.userId}>
                   {v.name}
                 </Select.Option>

@@ -7,7 +7,7 @@ import github from 'react-syntax-highlighter/dist/esm/styles/hljs/github';
 function* characterGenerator(text: string, step: number = 1) {
   let index = 0;
   while (index < text.length) {
-    yield text.slice(0, index);
+    yield text.slice(0, index) + '█';
     index += step;
   }
   yield text;
@@ -30,12 +30,12 @@ const CodeHeighlighter: React.FC<{ code: string } & CardProps> = ({
     SyntaxHighlighter.registerLanguage('javascript', js);
   }, []);
   React.useEffect(() => {
-    const generator = characterGenerator(code,2);
+    const generator = characterGenerator(code, 2);
 
     async function handleNext() {
       for (let value of generator) {
         setDisplayedText(value);
-        await delay(); // 每100毫秒显示4个字符
+        await delay();
       }
     }
 

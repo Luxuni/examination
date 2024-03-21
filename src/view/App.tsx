@@ -11,13 +11,7 @@ const App: React.FC = () => {
   const username = useAppSelector(selectusername)?.label ?? '';
   return (
     <div className="h-screen p-4 overflow-scroll bg-[var(--vscode-notebook-editorBackground)] App">
-      <Suspense
-        fallback={
-          <div className="h-full w-full flex items-center justify-center">
-            <Spin size="large" />
-          </div>
-        }
-      >
+      <Suspense fallback={<Spin size="large" fullscreen />}>
         <h2 className="text-2xl font-black text-center my-4">Hi!{username}</h2>
         <RouterProvider router={router} />
       </Suspense>

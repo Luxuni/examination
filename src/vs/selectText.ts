@@ -10,7 +10,7 @@ const CreateExamView = (
   ) => string,
 ) => {
   let panel: vscode.WebviewPanel | undefined;
-  let selectText = vscode.commands.registerCommand(
+  const selectText = vscode.commands.registerCommand(
     'examination.selectText',
     () => {
       const editor = vscode.window.activeTextEditor;
@@ -32,7 +32,6 @@ const CreateExamView = (
         panel.onDidDispose(
           () => {
             panel = undefined;
-            // 关闭所有的定时器
             vscode.window.showInformationMessage('关闭');
           },
           null,
@@ -58,10 +57,6 @@ const CreateExamView = (
         const config = vscode.workspace.getConfiguration('examination');
         const userMessage = config.get('message');
         panel.webview.html = getWebviewContent(srcUrl, vendorsUri);
-        // send user message to webview
-        panel.webview.postMessage({ userMessage });
-        panel.webview.postMessage({ text });
-        // 接收来自webview的消息
         panel.webview.onDidReceiveMessage(
           (message) => {
             switch (message.command) {

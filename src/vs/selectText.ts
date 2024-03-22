@@ -56,7 +56,10 @@ const CreateExamView = (
         }
         const config = vscode.workspace.getConfiguration('examination');
         const userMessage = config.get('message');
-        panel.webview.html = getWebviewContent(srcUrl, vendorsUri);
+        if (panel.webview.html === '') {
+          panel!.webview.html = getWebviewContent(srcUrl, vendorsUri);
+        }
+        panel!.webview.postMessage({ text });
         panel.webview.onDidReceiveMessage(
           (message) => {
             switch (message.command) {
@@ -67,6 +70,7 @@ const CreateExamView = (
                   vendorsUri,
                   nonce,
                 );
+                panel!.webview.postMessage({ userMessage });
                 panel!.webview.postMessage({ text });
                 vscode.window.showInformationMessage(message.text);
                 return;

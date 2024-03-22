@@ -1,10 +1,10 @@
 import { Card, Form, Input, Select } from 'antd';
-import { createResource } from '../../../resource';
+import { Resource } from '../../../resource';
 import { getUserList } from '../../../services';
 
 const { TextArea } = Input;
 
-const resource = createResource(getUserList());
+const resource = new Resource(getUserList());
 const ReviewForm: React.FC = () => {
   const userList = resource.read();
   return (

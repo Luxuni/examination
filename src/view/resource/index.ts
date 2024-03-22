@@ -1,35 +1,38 @@
 type Status = 'loading' | 'success' | 'error';
 
-const createResource = <T>(promise: Promise<T>) => {
-  let status: Status = 'loading';
-  let result: T | null = null;
-  let error: Error | null = null;
+class Resource<T> {
+  status: Status = 'loading';
+  result: T | null = null;
+  error: Error | null = null;
+  suspender: Promise<T>;
 
-  const suspender = promise.then(
-    (r) => {
-      status = 'success';
-      result = r;
-    },
-    (e) => {
-      status = 'error';
-      error = e;
-    },
-  );
+  constructor(promise: Promise<T>) {
+    this.suspender = promise.then(
+      (r) => {
+        this.status = 'success';
+        this.result = r;
+        return r;
+      },
+      (e) => {
+        this.status = 'error';
+        this.error = e;
+        throw e;
+      },
+    );
+  }
 
-  return {
-    read() {
-      switch (status) {
-        case 'loading':
-          throw suspender;
-        case 'success':
-          return result;
-        case 'error':
-          throw error;
-        default:
-          throw new Error('This should be impossible');
-      }
-    },
-  };
-};
+  read() {
+    switch (this.status) {
+      case 'loading':
+        throw this.suspender;
+      case 'success':
+        return this.result;
+      case 'error':
+        throw this.error;
+      default:
+        throw new Error('This should be impossible');
+    }
+  }
+}
 
-export { createResource };
+export { Resource };

@@ -12,7 +12,7 @@ const App: React.FC = () => {
   return (
     <div className="h-screen p-4 overflow-scroll bg-[var(--vscode-notebook-editorBackground)] App">
       <Suspense fallback={<Spin size="large" fullscreen />}>
-        <h2 className="text-2xl font-black text-center my-4">Hi!{username}</h2>
+        <h2 className="text-2xl font-black text-center my-4">{username}</h2>
         <RouterProvider router={router} />
       </Suspense>
     </div>

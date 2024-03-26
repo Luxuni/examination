@@ -1,13 +1,21 @@
-import Review from '../pages/review';
+import { RouteObject } from 'react-router-dom';
+import Main from '../pages/main';
+import Review from '../pages/main/review';
 
-const routerConfig = [
+const routerConfig: RouteObject[] = [
   {
     path: '/',
-    element: <Review />,
-  },
-  {
-    path: 'about',
-    element: <div>About</div>,
+    element: <Main />,
+    children: [
+      {
+        path: '',
+        element: <Review />,
+      },
+      {
+        path: 'about',
+        element: <div>About</div>,
+      }
+    ],
   },
 ];
 

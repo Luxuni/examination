@@ -3,7 +3,7 @@ import { selectUnikey } from '../../../features/unikeySlice';
 import { useAppSelector } from '../../../hooks';
 import ReviewForm from './components/ReviewForm';
 
-const App: React.FC = () => {
+const Review: React.FC = () => {
   const unikey = useAppSelector(selectUnikey);
   return (
     <div className="flex flex-col gap-4">
@@ -13,4 +13,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Review;

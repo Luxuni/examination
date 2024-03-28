@@ -1,9 +1,10 @@
+import { Schema } from 'form-render';
 const mainFormCreate = (
   authorOptions: {
     name: string;
     userId: number;
   }[],
-) => {
+): Schema => {
   return {
     type: 'object',
     properties: {

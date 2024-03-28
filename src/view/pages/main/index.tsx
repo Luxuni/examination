@@ -4,8 +4,8 @@ const Main: React.FC = () => {
   const location = useLocation();
   return (
     <div className="flex flex-col gap-4">
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
+      {/* <Link to="/">Home</Link>
+      <Link to="/about">About</Link> */}
       <SwitchTransition mode="out-in">
         <CSSTransition key={location.pathname} timeout={200} classNames="fade">
           <Outlet />

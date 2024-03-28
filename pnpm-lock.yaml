@@ -20,6 +20,9 @@ dependencies:
   form-render:
     specifier: ^2.4.4
     version: registry.npmmirror.com/form-render@2.4.4(@types/react@18.2.60)(antd@5.14.2)(react-dom@18.2.0)(react@18.2.0)
+  lodash:
+    specifier: ^4.17.21
+    version: registry.npmmirror.com/lodash@4.17.21
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -55,6 +58,9 @@ devDependencies:
   '@babel/preset-typescript':
     specifier: ^7.23.3
     version: 7.23.3(@babel/core@7.23.9)
+  '@types/lodash':
+    specifier: ^4.17.0
+    version: registry.npmmirror.com/@types/lodash@4.17.0
   '@types/mocha':
     specifier: ^10.0.6
     version: 10.0.6
@@ -2653,7 +2659,7 @@ packages:
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
-      lodash: 4.17.21
+      lodash: registry.npmmirror.com/lodash@4.17.21
       pretty-error: 4.0.0
       tapable: 2.2.1
       webpack: 5.90.3(webpack-cli@5.1.4)
@@ -3079,10 +3085,6 @@ packages:
 
   /lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
-    dev: true
-
-  /lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: true
 
   /log-symbols@4.1.0:
@@ -5284,6 +5286,12 @@ packages:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/json-schema/-/json-schema-7.0.15.tgz}
     name: '@types/json-schema'
     version: 7.0.15
+    dev: true
+
+  registry.npmmirror.com/@types/lodash@4.17.0:
+    resolution: {integrity: sha512-t7dhREVv6dbNj0q17X12j7yDG4bD/DHYX7o5/DbDxobP0HnGPgpRz2Ej77aL7TZT3DSw13fqUTj8J4mMnqa7WA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/lodash/-/lodash-4.17.0.tgz}
+    name: '@types/lodash'
+    version: 4.17.0
     dev: true
 
   registry.npmmirror.com/@types/node@18.19.19:

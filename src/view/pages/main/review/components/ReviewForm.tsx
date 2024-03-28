@@ -18,7 +18,6 @@ const ReviewForm: React.FC = () => {
         form={form}
         schema={schemaCreater(userList ?? [])}
         onFinish={onFinish}
-        maxWidth={360}
         footer={true}
       />
     </Card>

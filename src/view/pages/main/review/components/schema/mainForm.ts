@@ -57,7 +57,7 @@ const mainFormCreate = (
             label: item.name,
             value: item.userId,
           })),
-          placeholder: '请选择',
+          placeholder: '请选择作者',
         },
         description: '',
         tooltip: {

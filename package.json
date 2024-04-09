@@ -6,7 +6,6 @@
   "categories": [
     "Other"
   ],
-  "type": "module",
   "main": "./dist/extension.js",
   "scripts": {
     "build": "webpack -c webpack.prod.js",
@@ -54,6 +53,7 @@
   },
   "activationEvents": [],
   "dependencies": {
+    "@ant-design/cssinjs": "^1.18.5",
     "@reduxjs/toolkit": "^2.2.1",
     "ahooks": "^3.7.10",
     "antd": "^5.14.2",

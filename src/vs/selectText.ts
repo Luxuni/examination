@@ -9,18 +9,19 @@ const CreateExamView = (
     nonce?: string,
   ) => string,
 ) => {
+  let editor: vscode.TextEditor;
   let panel: vscode.WebviewPanel | undefined;
   const selectText = vscode.commands.registerCommand(
     'examination.selectText',
     () => {
-      const editor = vscode.window.activeTextEditor;
+      editor = vscode.window.activeTextEditor as vscode.TextEditor;
       if (editor) {
         const selection = editor.selection;
         const text = editor.document.getText(selection);
         if (!panel) {
           panel = vscode.window.createWebviewPanel(
             'examinationView',
-            'Examination View',
+            '代码标注',
             vscode.ViewColumn.Two,
             {
               retainContextWhenHidden: true,
@@ -59,9 +60,21 @@ const CreateExamView = (
         if (panel.webview.html === '') {
           panel!.webview.html = getWebviewContent(srcUrl, vendorsUri);
         }
-        panel!.webview.postMessage({ text });
+
+        // 获取选中的选区和文件路径
+        const { start, end } = editor.selection;
+        let { fileName } = editor.document;
+        if (vscode.workspace.workspaceFolders) {
+          fileName = fileName.replace(
+            vscode.workspace.workspaceFolders[0].uri.fsPath,
+            '',
+          );
+        }
+        const range = `${fileName};,${start.line}-${start.character};,${end.line}-${end.character}`;
+
+        panel!.webview.postMessage({ text: text, range: range });
         panel.webview.onDidReceiveMessage(
-          (message) => {
+          async (message) => {
             switch (message.command) {
               case 'reload':
                 const nonce = new Date().getTime() + '';
@@ -71,13 +84,80 @@ const CreateExamView = (
                   nonce,
                 );
                 panel!.webview.postMessage({ userMessage });
-                panel!.webview.postMessage({ text });
+                panel!.webview.postMessage({ text, range });
                 vscode.window.showInformationMessage(message.text);
                 return;
               case 'already':
                 panel!.webview.postMessage({ userMessage });
-                panel!.webview.postMessage({ text });
+                panel!.webview.postMessage({ text, range });
                 vscode.window.showInformationMessage(message.text);
+                return;
+              case 'position':
+                console.log(message, 'message');
+                const strArray = message.text.split(';,');
+                let filePath = strArray[0];
+                if (vscode.workspace.workspaceFolders) {
+                  filePath =
+                    vscode.workspace.workspaceFolders[0].uri.fsPath + filePath;
+                }
+
+                const doc = await vscode.workspace.openTextDocument(
+                  vscode.Uri.parse('file:' + filePath),
+                );
+                await vscode.window.showTextDocument(doc, { preview: false });
+
+                const startChar = strArray[1].split('-');
+                const endChar = strArray[2].split('-');
+                const start = new vscode.Position(
+                  Number(startChar[0]),
+                  Number(startChar[1]),
+                );
+                const end = new vscode.Position(
+                  Number(endChar[0]),
+                  Number(endChar[1]),
+                );
+
+                if (vscode.window.activeTextEditor) {
+                  editor = vscode.window.activeTextEditor;
+                  editor.revealRange(new vscode.Range(start, end));
+                }
+
+                const hightlightCodes = (
+                  startPos?: vscode.Position,
+                  endPos?: vscode.Position,
+                ) => {
+                  const codeDecorationType =
+                    vscode.window.createTextEditorDecorationType({
+                      backgroundColor: { id: 'examination.codeBackground' },
+                    });
+                  if (!startPos || !endPos) {
+                    const selection = editor.selection;
+                    startPos = selection.start;
+                    endPos = selection.end;
+                    console.log(startPos, endPos);
+                  }
+                  const decoration = {
+                    range: new vscode.Range(startPos, endPos),
+                    hoverMessage: '此处添加了标注',
+                  };
+                  editor?.setDecorations(codeDecorationType, [decoration]);
+                };
+
+                console.log(start, end, filePath);
+                hightlightCodes(start, end);
+
+                vscode.commands.getCommands().then(async (res) => {
+                  if (res.includes('gitlens.openWorkingFile')) {
+                    vscode.commands.executeCommand(
+                      'gitlens.openWorkingFile',
+                      vscode.Uri.parse('file:' + filePath),
+                    );
+                  } else {
+                    vscode.window.showInformationMessage(
+                      '请先安装gitlens插件!',
+                    );
+                  }
+                });
                 return;
             }
           },

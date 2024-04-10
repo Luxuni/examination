@@ -8,7 +8,7 @@ const mainFormCreate = (
   return {
     type: 'object',
     properties: {
-      view: {
+      opinion: {
         title: '评审意见',
         type: 'string',
         props: {

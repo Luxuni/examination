@@ -35,7 +35,8 @@ const ReviewForm: React.FC = () => {
 
   const onFinish = (formData: any) => {
     console.log(range, 'range');
-    formData.range = range;
+    // formData.range = range;
+    Object.assign(formData || {} , range)
     formData.date = new Date().toLocaleDateString();
     (formData.id = Date.now()), console.log('formData:', { formData });
     dispatch(changeList(formData));

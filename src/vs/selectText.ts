@@ -70,7 +70,16 @@ const CreateExamView = (
             '',
           );
         }
-        const range = `${fileName};,${start.line}-${start.character};,${end.line}-${end.character}`;
+        //const range = `${fileName};,${start.line}-${start.character};,${end.line}-${end.character}`;
+        const range = {
+          moduleName: path.dirname(fileName)?.split('\\')?.reverse()[0],
+          fileName: path.basename(fileName),
+          filePath: fileName,
+          startLine: start.line,
+          startCharacter: start.character,
+          endLine: end.line,
+          endCharacter: end.character,
+        };
 
         panel!.webview.postMessage({ text: text, range: range });
         panel.webview.onDidReceiveMessage(

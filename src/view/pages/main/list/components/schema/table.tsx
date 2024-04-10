@@ -12,7 +12,7 @@ export const columns: ProColumnsType = [
   },
   {
     title: '模块名',
-    dataIndex: 'moudleName',
+    dataIndex: 'moduleName',
     ellipsis: true,
     copyable: true,
     valueType: 'text',
@@ -104,7 +104,7 @@ export const setColumns = (tableRef: any) => {
     },
     {
       title: '模块名',
-      dataIndex: 'moudleName',
+      dataIndex: 'moduleName',
       ellipsis: true,
       copyable: true,
       valueType: 'text',
@@ -175,16 +175,18 @@ const Buttons = (tableRef: any, row: any) => {
       <Button
         onClick={() => {
           console.log(row, 'row');
+          const { filePath, startLine, startCharacter, endLine, endCharacter } =
+            row as any;
           (window as any).__vscode__.postMessage({
             command: 'position',
-            text: row.range,
+            text: `${filePath};,${startLine}-${startCharacter};,${endLine}-${endCharacter}`,
           });
           message.success('定位成功');
         }}
       >
         定位
       </Button>
-      {tab >= 2 && (
+      {tab < 2 && (
         <Button
           onClick={() => {
             message.success('删除成功');

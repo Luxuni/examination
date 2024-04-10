@@ -12,7 +12,7 @@ const requestData = (list?: any) => {
           {
             id: Date.now(),
             projectName: '项目名',
-            moudleName: '模块名',
+            moduleName: '模块名',
             fileName: '文件名',
             author: '作者',
             type: '问题类型',
@@ -22,7 +22,7 @@ const requestData = (list?: any) => {
           {
             id: Date.now() + 100,
             projectName: '项目名2',
-            moudleName: '模块名2',
+            moduleName: '模块名2',
             fileName: '文件名2',
             author: '作者2',
             type: '问题类型2',

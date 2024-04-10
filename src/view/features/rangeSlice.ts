@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '../hooks/store';
 
 export interface rangeState {
-  range: string;
+  range: object;
 }
 
 const initialState: rangeState = {
-  range: '',
+  range: {},
 };
 
 export const rangeSlice = createSlice({
@@ -14,7 +14,7 @@ export const rangeSlice = createSlice({
   initialState,
 
   reducers: {
-    changeRange: (state, action: PayloadAction<string>) => {
+    changeRange: (state, action: PayloadAction<object>) => {
       state.range = action.payload;
     },
   },

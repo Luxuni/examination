@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import TableRender, { TableContext } from 'table-render';
-import { searchApi, searchApi2,searchApi3 } from './components/schema/request';
-import { setColumns } from './components/schema/table';
 import { selectList } from '../../../features/listSlice';
 import { useAppSelector } from '../../../hooks';
+import { searchApi3 } from './components/schema/request';
+import { setColumns } from './components/schema/table';
 
 const List: React.FC = () => {
   const tableRef = useRef<TableContext>(null);

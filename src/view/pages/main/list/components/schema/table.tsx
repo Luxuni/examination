@@ -6,7 +6,7 @@ export const columns: ProColumnsType = [
     title: '项目名称',
     dataIndex: 'projectName',
     valueType: 'text',
-    width: 100,
+    width: '120px',
     ellipsis: true,
     copyable: true,
   },
@@ -16,7 +16,7 @@ export const columns: ProColumnsType = [
     ellipsis: true,
     copyable: true,
     valueType: 'text',
-    width: 100,
+    width: '120px',
   },
   {
     title: '文件名',
@@ -24,37 +24,37 @@ export const columns: ProColumnsType = [
     ellipsis: true,
     copyable: true,
     valueType: 'text',
-    width: 100,
+    width: '120px',
   },
   {
     title: '作者',
     dataIndex: 'author',
-    width: 90,
+    width: '120px',
     valueType: 'text',
   },
   {
     title: '问题类型',
     dataIndex: 'type',
-    width: 100,
+    width: '120px',
     valueType: 'text',
   },
   {
     title: '评审日期',
     dataIndex: 'date',
-    width: 100,
+    width: '120px',
     valueType: 'text',
   },
   {
     title: '评审意见',
     dataIndex: 'opinion',
-    width: 120,
+    width: '120px',
     ellipsis: true,
     copyable: true,
     valueType: 'text',
   },
   {
     title: '操作',
-    width: 120,
+    width: '320px',
     render: (_, row) => (
       <Space>
         <Button

@@ -3,6 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, AppState } from './store';
 import useCodeMessage from './useCodeMessage';
 import useDarkReader from './useDarkReader';
+import useToHome from './useToHome';
 
 export const useForm =
   <TContent>(defaultValues: TContent) =>
@@ -45,4 +46,4 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
 
-export { useCodeMessage, useDarkReader };
+export { useCodeMessage, useDarkReader, useToHome};

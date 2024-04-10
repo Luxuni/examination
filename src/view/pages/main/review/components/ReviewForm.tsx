@@ -37,13 +37,12 @@ const ReviewForm: React.FC = () => {
     console.log(range, 'range');
     formData.range = range;
     formData.date = new Date().toLocaleDateString();
-    formData.id = Date.now(),
-     console.log('formData:', { formData });
+    (formData.id = Date.now()), console.log('formData:', { formData });
     dispatch(changeList(formData));
     message.success('提交成功');
     setTimeout(() => {
-       navigate('/about');
-    },2000)
+      navigate('/about');
+    }, 2000);
   };
   return (
     <Card bordered={false}>

@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '../hooks/store';
 
-
 export interface unikeyState {
   unikey: string;
 }
 
 const initialState: unikeyState = {
-  unikey: 'unikey',
+  unikey: '',
 };
-
 
 export const unikeySlice = createSlice({
   name: 'unikey',
@@ -20,7 +18,6 @@ export const unikeySlice = createSlice({
       state.unikey = action.payload;
     },
   },
-
 });
 
 export const { changeUnikey } = unikeySlice.actions;

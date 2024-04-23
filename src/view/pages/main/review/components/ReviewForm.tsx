@@ -4,6 +4,8 @@ import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { changeList } from '../../../../features/listSlice';
 import { rangeState, selectRange } from '../../../../features/rangeSlice';
+import { selectUnikey } from '../../../../features/unikeySlice';
+import { selectusername } from '../../../../features/userSlice';
 import { useAppDispatch, useAppSelector } from '../../../../hooks';
 import { Resource } from '../../../../resource';
 import { getTypeList, getUserList } from '../../../../services';
@@ -11,7 +13,7 @@ import schemaCreater from './schema/mainForm';
 
 type RangeType = Exclude<rangeState['range'], null>;
 
-type PickType = Pick<RangeType, 'author' | 'date' | 'id' | 'opinion' | 'type'>;
+type PickType = Pick<RangeType, 'authorUserId' | 'comment' | 'errorDistCode'>;
 
 const MainFormFooter = () => {
   return (
@@ -34,6 +36,8 @@ const ReviewForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const range = useAppSelector(selectRange);
+  const userMessage = useAppSelector(selectusername);
+  const unikey = useAppSelector(selectUnikey);
 
   const userList = useMemo(
     () => userListResource.read()?.filter((el) => el.name.includes('前端')),
@@ -45,11 +49,34 @@ const ReviewForm: React.FC = () => {
   const form = useForm();
 
   const onFinish = (formData: PickType) => {
-    const formMessage = Object.assign(formData || {}, range);
-    formData.date = new Date().toLocaleDateString();
-    formData.id = Date.now();
-    dispatch(changeList(formMessage));
+    const errorDistName =
+      typeList?.find((el) => el.dictCode === formData.errorDistCode)
+        ?.dictName || '未知问题类型';
+    const reviewer = userMessage?.label || '未知评审人';
+    const reviewerUserId = userMessage?.userId || 0;
+    const author =
+      userList?.find((el) => el.userId === formData.authorUserId)?.name ||
+      '未知作者';
+
+    const formMessage = {
+      createDate: new Date().toLocaleDateString(),
+      id: Math.random() * 1000,
+      projectName: '前端测试项目',
+      errorDistName,
+      reviewer,
+      reviewerUserId,
+      author,
+      code: unikey,
+      status: 0,
+      gitUrl: '',
+      branch: '',
+      ...formData,
+    };
+    
+    const res = Object.assign(formMessage, range);
+    dispatch(changeList(res));
     message.success('提交成功');
+
     setTimeout(() => {
       navigate('/about');
     }, 2000);

@@ -3,18 +3,27 @@ import { AppState } from '../hooks/store';
 
 export interface rangeState {
   range: {
-    author: number;
-    date: string;
-    endCharacter: number;
-    endLine: number;
-    fileName: string;
-    filePath: string;
     id: number;
+    projectName: string;
+    fileName: string;
+    errorDistName: string;
+    errorDistCode: string;
+    reviewer: string;
+    reviewerUserId: number;
+    author: string;
+    authorUserId: number;
+    code: string;
+    createDate: string;
+    status: 0 | 1;
+    gitUrl: string;
+    branch: string;
     moduleName: string;
-    opinion: string;
-    startCharacter: number;
+    filePath: string;
     startLine: number;
-    type: string;
+    endLine: number;
+    comment: string;
+    startCharacter: number;
+    endCharacter: number;
   } | null;
 }
 

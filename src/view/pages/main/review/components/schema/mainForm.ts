@@ -12,7 +12,7 @@ const mainFormCreate = (
   return {
     type: 'object',
     properties: {
-      opinion: {
+      comment: {
         title: '评审意见',
         type: 'string',
         props: {
@@ -28,7 +28,7 @@ const mainFormCreate = (
         },
         widget: 'input',
       },
-      type: {
+      errorDistCode: {
         title: '问题类型',
         type: 'string',
         props: {
@@ -47,7 +47,7 @@ const mainFormCreate = (
         },
         widget: 'select',
       },
-      author: {
+      authorUserId: {
         title: '作者',
         type: 'number',
         props: {

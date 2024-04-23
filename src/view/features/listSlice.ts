@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '../hooks/store';
+import { rangeState } from './rangeSlice';
 
 export interface ListState {
-  list: Array<any>;
+  list: rangeState['range'][];
 }
 
 const initialState: ListState = {
@@ -14,7 +15,7 @@ export const listSlice = createSlice({
   initialState,
 
   reducers: {
-    changeList: (state, action: PayloadAction<any>) => {
+    changeList: (state, action: PayloadAction<rangeState['range']>) => {
       state.list.push(action.payload);
     },
   },

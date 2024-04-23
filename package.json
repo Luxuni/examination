@@ -63,6 +63,23 @@
     }
   },
   "activationEvents": [],
+  "lint-staged": {
+    "*.{md,json}": [
+      "prettier --write --no-error-on-unmatched-pattern"
+    ],
+    "*.{css,less}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --parser=typescript --write"
+    ]
+  },
   "dependencies": {
     "@ant-design/cssinjs": "^1.18.5",
     "@reduxjs/toolkit": "^2.2.1",
@@ -96,6 +113,7 @@
     "@types/vscode": "^1.86.0",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
+    "@umijs/lint": "^4.1.10",
     "@vscode/test-cli": "^0.0.6",
     "@vscode/test-electron": "^2.3.9",
     "autoprefixer": "^10.4.18",

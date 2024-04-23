@@ -1,12 +1,17 @@
 import { Button, Card, Col, Row, message } from 'antd';
 import FormRender, { useForm } from 'form-render';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { changeList } from '../../../../features/listSlice';
-import { selectRange } from '../../../../features/rangeSlice';
+import { rangeState, selectRange } from '../../../../features/rangeSlice';
 import { useAppDispatch, useAppSelector } from '../../../../hooks';
 import { Resource } from '../../../../resource';
-import { getUserList } from '../../../../services';
+import { getTypeList, getUserList } from '../../../../services';
 import schemaCreater from './schema/mainForm';
+
+type RangeType = Exclude<rangeState['range'], null>;
+
+type PickType = Pick<RangeType, 'author' | 'date' | 'id' | 'opinion' | 'type'>;
 
 const MainFormFooter = () => {
   return (
@@ -22,34 +27,39 @@ const MainFormFooter = () => {
     </Row>
   );
 };
-const resource = new Resource(getUserList());
+
+const userListResource = new Resource(getUserList());
+const typeListResource = new Resource(getTypeList());
 const ReviewForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const range = useAppSelector(selectRange);
 
-  const userList = resource.read()?.filter((el) => {
-    return el.name.includes('前端');
-  });
+  const userList = useMemo(
+    () => userListResource.read()?.filter((el) => el.name.includes('前端')),
+    [],
+  );
+
+  const typeList = useMemo(() => typeListResource.read(), []);
+
   const form = useForm();
 
-  const onFinish = (formData: any) => {
-    console.log(range, 'range');
-    // formData.range = range;
-    Object.assign(formData || {} , range)
+  const onFinish = (formData: PickType) => {
+    const formMessage = Object.assign(formData || {}, range);
     formData.date = new Date().toLocaleDateString();
-    (formData.id = Date.now()), console.log('formData:', { formData });
-    dispatch(changeList(formData));
+    formData.id = Date.now();
+    dispatch(changeList(formMessage));
     message.success('提交成功');
     setTimeout(() => {
       navigate('/about');
     }, 2000);
   };
+
   return (
     <Card bordered={false}>
       <FormRender
         form={form}
-        schema={schemaCreater(userList ?? [])}
+        schema={schemaCreater(userList ?? [], typeList ?? [])}
         onFinish={onFinish}
         footer={MainFormFooter}
       />

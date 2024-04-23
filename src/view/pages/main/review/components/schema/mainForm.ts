@@ -4,6 +4,10 @@ const mainFormCreate = (
     name: string;
     userId: number;
   }[],
+  typeOptions: {
+    dictCode: string;
+    dictName: string;
+  }[],
 ): Schema => {
   return {
     type: 'object',
@@ -28,16 +32,10 @@ const mainFormCreate = (
         title: '问题类型',
         type: 'string',
         props: {
-          options: [
-            {
-              label: 'A',
-              value: 'A',
-            },
-            {
-              label: 'B',
-              value: 'B',
-            },
-          ],
+          options: typeOptions.map((item) => ({
+            label: item.dictName,
+            value: item.dictCode,
+          })),
           placeholder: '请选择问题类型',
         },
         tooltip: {

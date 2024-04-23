@@ -5,8 +5,12 @@ const host = 'https://ideaplugin.lonsun.cn/codereview/codeReview';
 const url = {
   getUserList: `${host}/getUserList`,
   getCodeList: `${host}/getCodeList`,
+  getTypeList: `${host}/getTypeList`,
 };
 
+/**
+ * 获取用户列表
+ */
 const getUserList = () => {
   return request.get<
     {
@@ -16,6 +20,9 @@ const getUserList = () => {
   >(url.getUserList);
 };
 
+/*
+ * 查询问题列表
+ */
 const getCodeList = (params: any) => {
   return request.get<
     {
@@ -25,4 +32,16 @@ const getCodeList = (params: any) => {
   >(url.getCodeList, { params });
 };
 
-export { getCodeList, getUserList };
+/*
+ * 获取所有错误类别
+ */
+const getTypeList = () => {
+  return request.get<
+    {
+      dictCode: string;
+      dictName: string;
+    }[]
+  >(url.getTypeList);
+};
+
+export { getCodeList, getTypeList, getUserList };

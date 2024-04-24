@@ -25,13 +25,10 @@ const getUserList = () => {
 /*
  * 查询问题列表
  */
-const getCodeList = (params: any) => {
-  return request.get<
-    {
-      code: string;
-      codeId: number;
-    }[]
-  >(url.getCodeList, { params });
+const getCodeList = (params: { operator: number; type: 1 | 2 | 3 | 4 }) => {
+  return request.get<Exclude<rangeState['range'], null>[]>(url.getCodeList, {
+    params,
+  });
 };
 
 /*

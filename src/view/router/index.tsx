@@ -14,7 +14,6 @@ const routerConfig: RouteObject[] = [
       },
       {
         path: 'about',
-        // element: <div>About</div>,
         element: <List />,
       },
     ],

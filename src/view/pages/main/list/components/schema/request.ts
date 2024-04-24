@@ -31,42 +31,9 @@ const requestData = (list?: any) => {
           },
         ],
   };
-  console.log(data, 'data');
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     resolve(data);
   });
-};
-
-export const searchApi = async () => {
-  const { success, data } = (await requestData()) as responeType;
-  if (success) {
-    return {
-      data: data,
-      total: data.length,
-    };
-  } else {
-    // 必须返回 data 和 total
-    return {
-      data: [],
-      total: 0,
-    };
-  }
-};
-
-export const searchApi2 = async () => {
-  const { success, data } = (await requestData()) as responeType;
-  if (success) {
-    return {
-      data: data.slice(1),
-      total: data.length - 1,
-    };
-  } else {
-    // 必须返回 data 和 total
-    return {
-      data: [],
-      total: 0,
-    };
-  }
 };
 
 export const searchApi3 = (list: any) => {

@@ -17,9 +17,17 @@ type RangeType = Exclude<rangeState['range'], null>;
 
 type PickType = Pick<RangeType, 'authorUserId' | 'comment' | 'errorDistCode'>;
 
-const MainFormFooter = () => {
+const MainFormFooter: React.FC = () => {
+  const navigate = useNavigate();
+  const viewTheProblem = () => {
+    navigate('/about');
+  };
+
   return (
     <Row gutter={16} justify="end">
+      <Col>
+        <Button onClick={viewTheProblem}>查看问题</Button>
+      </Col>
       <Col>
         <Button htmlType="reset">重置</Button>
       </Col>

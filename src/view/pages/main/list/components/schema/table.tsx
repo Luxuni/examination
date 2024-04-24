@@ -1,99 +1,9 @@
 import { Button, message, Space } from 'antd';
-import { ProColumnsType } from 'table-render';
+import { ProColumnsType, TableContext } from 'table-render';
 
-export const columns: ProColumnsType = [
-  {
-    title: '项目名称',
-    dataIndex: 'projectName',
-    valueType: 'text',
-    width: '120px',
-    ellipsis: true,
-    copyable: true,
-  },
-  {
-    title: '模块名',
-    dataIndex: 'moduleName',
-    ellipsis: true,
-    copyable: true,
-    valueType: 'text',
-    width: '120px',
-  },
-  {
-    title: '文件名',
-    dataIndex: 'fileName',
-    ellipsis: true,
-    copyable: true,
-    valueType: 'text',
-    width: '120px',
-  },
-  {
-    title: '作者',
-    dataIndex: 'author',
-    width: '120px',
-    valueType: 'text',
-  },
-  {
-    title: '问题类型',
-    dataIndex: 'type',
-    width: '120px',
-    valueType: 'text',
-  },
-  {
-    title: '评审日期',
-    dataIndex: 'date',
-    width: '120px',
-    valueType: 'text',
-  },
-  {
-    title: '评审意见',
-    dataIndex: 'opinion',
-    width: '120px',
-    ellipsis: true,
-    copyable: true,
-    valueType: 'text',
-  },
-  {
-    title: '操作',
-    width: '320px',
-    render: (_, row) => (
-      <Space>
-        <Button
-          onClick={() => {
-            console.log(_, '-----');
-            console.log(row, 'row');
-            message.success('查看详情');
-          }}
-        >
-          详情
-        </Button>
-        <Button
-          onClick={() => {
-            message.success('修复成功');
-          }}
-        >
-          修复
-        </Button>
-        <Button
-          onClick={() => {
-            message.success('删除成功');
-          }}
-        >
-          删除
-        </Button>
-        <Button
-          onClick={() => {
-            message.success('定位成功');
-          }}
-        >
-          定位
-        </Button>
-      </Space>
-    ),
-  },
-];
 const Buttons = (tableRef: any, row: any) => {
   const tab = tableRef?.current?.getState()?.tab;
-  console.log(tab, 'tab--');
+
   return (
     <Space>
       <Button
@@ -110,7 +20,6 @@ const Buttons = (tableRef: any, row: any) => {
       >
         修复
       </Button>
-
       <Button
         onClick={() => {
           console.log(row, 'row');
@@ -137,7 +46,9 @@ const Buttons = (tableRef: any, row: any) => {
   );
 };
 
-export const setColumns = (tableRef: any) => {
+export const createColumns = (
+  tableRef: React.MutableRefObject<TableContext | null>,
+) => {
   return [
     {
       title: '项目名称',

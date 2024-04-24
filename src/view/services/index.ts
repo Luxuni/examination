@@ -1,3 +1,4 @@
+import { rangeState } from '../features/rangeSlice';
 import request from './request';
 
 const host = 'https://ideaplugin.lonsun.cn/codereview/codeReview';
@@ -6,6 +7,7 @@ const url = {
   getUserList: `${host}/getUserList`,
   getCodeList: `${host}/getCodeList`,
   getTypeList: `${host}/getTypeList`,
+  save: `${host}/save`,
 };
 
 /**
@@ -44,4 +46,13 @@ const getTypeList = () => {
   >(url.getTypeList);
 };
 
-export { getCodeList, getTypeList, getUserList };
+/*
+ * 新增问题
+ */
+const save = (data: Exclude<rangeState['range'], null>) => {
+  return request.post(url.save, {
+    data,
+  });
+};
+
+export { getCodeList, getTypeList, getUserList, save };

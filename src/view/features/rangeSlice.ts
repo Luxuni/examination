@@ -10,6 +10,7 @@ export interface rangeState {
     errorDistCode: string;
     reviewer: string;
     reviewerUserId: number;
+    recordStatus: 0 | 1;
     author: string;
     authorUserId: number;
     code: string;
@@ -22,8 +23,6 @@ export interface rangeState {
     startLine: number;
     endLine: number;
     comment: string;
-    startCharacter: number;
-    endCharacter: number;
   } | null;
 }
 

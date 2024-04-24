@@ -91,6 +91,51 @@ export const columns: ProColumnsType = [
     ),
   },
 ];
+const Buttons = (tableRef: any, row: any) => {
+  const tab = tableRef?.current?.getState()?.tab;
+  console.log(tab, 'tab--');
+  return (
+    <Space>
+      <Button
+        onClick={() => {
+          message.success('查看详情');
+        }}
+      >
+        详情
+      </Button>
+      <Button
+        onClick={() => {
+          message.success('修复成功');
+        }}
+      >
+        修复
+      </Button>
+
+      <Button
+        onClick={() => {
+          console.log(row, 'row');
+          const { filePath, startLine, endLine } = row as any;
+          (window as any).__vscode__.postMessage({
+            command: 'position',
+            text: `${filePath};,${startLine}-0;,${endLine}-0`,
+          });
+          message.success('定位成功');
+        }}
+      >
+        定位
+      </Button>
+      {tab < 2 && (
+        <Button
+          onClick={() => {
+            message.success('删除成功');
+          }}
+        >
+          删除
+        </Button>
+      )}
+    </Space>
+  );
+};
 
 export const setColumns = (tableRef: any) => {
   return [
@@ -150,51 +195,4 @@ export const setColumns = (tableRef: any) => {
       render: (row) => Buttons(tableRef, row),
     },
   ] as ProColumnsType;
-};
-
-const Buttons = (tableRef: any, row: any) => {
-  const tab = tableRef?.current?.getState()?.tab;
-  console.log(tab, 'tab--');
-  return (
-    <Space>
-      <Button
-        onClick={() => {
-          message.success('查看详情');
-        }}
-      >
-        详情
-      </Button>
-      <Button
-        onClick={() => {
-          message.success('修复成功');
-        }}
-      >
-        修复
-      </Button>
-
-      <Button
-        onClick={() => {
-          console.log(row, 'row');
-          const { filePath, startLine, startCharacter, endLine, endCharacter } =
-            row as any;
-          (window as any).__vscode__.postMessage({
-            command: 'position',
-            text: `${filePath};,${startLine}-${startCharacter};,${endLine}-${endCharacter}`,
-          });
-          message.success('定位成功');
-        }}
-      >
-        定位
-      </Button>
-      {tab < 2 && (
-        <Button
-          onClick={() => {
-            message.success('删除成功');
-          }}
-        >
-          删除
-        </Button>
-      )}
-    </Space>
-  );
 };

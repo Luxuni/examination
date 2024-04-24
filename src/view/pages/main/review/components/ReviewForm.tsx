@@ -1,5 +1,6 @@
 import { Button, Card, Col, Row, message } from 'antd';
 import FormRender, { useForm } from 'form-render';
+import moment from 'moment';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { changeList } from '../../../../features/listSlice';
@@ -8,7 +9,8 @@ import { selectUnikey } from '../../../../features/unikeySlice';
 import { selectusername } from '../../../../features/userSlice';
 import { useAppDispatch, useAppSelector } from '../../../../hooks';
 import { Resource } from '../../../../resource';
-import { getTypeList, getUserList } from '../../../../services';
+import { getTypeList, getUserList, save } from '../../../../services';
+import { Snowflake } from '../../../../utils';
 import schemaCreater from './schema/mainForm';
 
 type RangeType = Exclude<rangeState['range'], null>;
@@ -48,7 +50,7 @@ const ReviewForm: React.FC = () => {
 
   const form = useForm();
 
-  const onFinish = (formData: PickType) => {
+  const onFinish = async (formData: PickType) => {
     const errorDistName =
       typeList?.find((el) => el.dictCode === formData.errorDistCode)
         ?.dictName || '未知问题类型';
@@ -57,10 +59,13 @@ const ReviewForm: React.FC = () => {
     const author =
       userList?.find((el) => el.userId === formData.authorUserId)?.name ||
       '未知作者';
+    const snowflake = new Snowflake(1, 0);
+    const id = snowflake.nextId();
+    const createDate = moment().format('YYYY-MM-DD HH:mm:ss');
 
     const formMessage = {
-      createDate: new Date().toLocaleDateString(),
-      id: Math.random() * 1000,
+      createDate,
+      id,
       projectName: '前端测试项目',
       errorDistName,
       reviewer,
@@ -70,16 +75,15 @@ const ReviewForm: React.FC = () => {
       status: 0,
       gitUrl: '',
       branch: '',
+      recordStatus: 0,
       ...formData,
     };
-    
+
     const res = Object.assign(formMessage, range);
+    await save(res);
     dispatch(changeList(res));
     message.success('提交成功');
-
-    setTimeout(() => {
-      navigate('/about');
-    }, 2000);
+    navigate('/about');
   };
 
   return (

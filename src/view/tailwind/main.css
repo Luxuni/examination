@@ -6,21 +6,29 @@ body {
   padding: 0;
 }
 
-.fade-exit {
+.layout-main-page-enter {
   opacity: 0;
-  transform: translateX(50px);
+  transform: translateX(-50px);
 }
 
-.fade-exit-active {
+.layout-main-page-enter-active {
   opacity: 1;
   transform: translateX(0%);
+  transition:
+    opacity 500ms,
+    transform 500ms;
 }
 
-.fade-enter-active,
-.fade-exit-active {
-  transition: all 300ms;
+.layout-main-page-exit {
+  opacity: 1;
 }
 
-.ant-form-item-control-input-content .ant-space, .ant-form-item-control-input-content .ant-space .ant-space-item{
+.layout-main-page-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.ant-form-item-control-input-content .ant-space,
+.ant-form-item-control-input-content .ant-space .ant-space-item {
   width: 100%;
 }

@@ -1,18 +1,15 @@
 import { Button, message, Space } from 'antd';
 import { ProColumnsType, TableContext } from 'table-render';
+import { rangeState } from '../../../../../features/rangeSlice';
 
-const Buttons = (tableRef: any, row: any) => {
-  const tab = tableRef?.current?.getState()?.tab;
+const Buttons = (
+  tableRef: React.MutableRefObject<TableContext | null>,
+  row: rangeState['range'],
+) => {
+  // const tab = tableRef.current?.getState()?.tab;
 
   return (
     <Space>
-      <Button
-        onClick={() => {
-          message.success('查看详情');
-        }}
-      >
-        详情
-      </Button>
       <Button
         onClick={() => {
           message.success('修复成功');
@@ -33,22 +30,13 @@ const Buttons = (tableRef: any, row: any) => {
       >
         定位
       </Button>
-      {tab < 2 && (
-        <Button
-          onClick={() => {
-            message.success('删除成功');
-          }}
-        >
-          删除
-        </Button>
-      )}
     </Space>
   );
 };
 
 export const createColumns = (
   tableRef: React.MutableRefObject<TableContext | null>,
-) => {
+): ProColumnsType => {
   return [
     {
       title: '项目名称',
@@ -82,19 +70,19 @@ export const createColumns = (
     },
     {
       title: '问题类型',
-      dataIndex: 'type',
+      dataIndex: 'errorDistName',
       valueType: 'text',
       width: '120px',
     },
     {
       title: '评审日期',
-      dataIndex: 'date',
+      dataIndex: 'createDate',
       valueType: 'text',
       width: '120px',
     },
     {
       title: '评审意见',
-      dataIndex: 'opinion',
+      dataIndex: 'comment',
       ellipsis: true,
       copyable: true,
       valueType: 'text',
@@ -102,8 +90,8 @@ export const createColumns = (
     },
     {
       title: '操作',
-      width: '320px',
-      render: (row) => Buttons(tableRef, row),
+      width: '240px',
+      render: (row: rangeState['range']) => Buttons(tableRef, row),
     },
-  ] as ProColumnsType;
+  ];
 };

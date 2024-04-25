@@ -11,23 +11,8 @@ const mainFormCreate = (
 ): Schema => {
   return {
     type: 'object',
+    column: 2,
     properties: {
-      comment: {
-        title: '评审意见',
-        type: 'string',
-        props: {
-          placeholder: '请输入评审意见',
-          allowClear: true,
-        },
-        tooltip: {
-          title: '请输入评审意见',
-        },
-        required: true,
-        message: {
-          required: '请输入评审意见',
-        },
-        widget: 'input',
-      },
       errorDistCode: {
         title: '问题类型',
         type: 'string',
@@ -67,9 +52,25 @@ const mainFormCreate = (
         },
         widget: 'select',
       },
+      comment: {
+        title: '评审意见',
+        type: 'string',
+        props: {
+          placeholder: '请输入评审意见',
+          allowClear: true,
+        },
+        tooltip: {
+          title: '请输入评审意见',
+        },
+        required: true,
+        message: {
+          required: '请输入评审意见',
+        },
+        widget: 'input',
+        cellSpan: 2,
+      },
     },
     displayType: 'column',
-    column: 1,
     maxWidth: '100%',
   };
 };

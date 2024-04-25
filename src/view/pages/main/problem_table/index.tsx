@@ -67,7 +67,6 @@ const ProblemTable: React.FC = () => {
                         text: `${filePath};,${startLine}-0;,${endLine}-0`,
                       });
                     } else if (key === 'delete') {
-                      console.log('delete');
                       modal.confirm({
                         title: '删除',
                         content: '确定删除该条问题吗？',
@@ -82,7 +81,6 @@ const ProblemTable: React.FC = () => {
                         },
                       });
                     } else if (key === 'fix') {
-                      console.log('fix');
                       modal.confirm({
                         title: '修复',
                         content: '确定修复该条问题吗？',

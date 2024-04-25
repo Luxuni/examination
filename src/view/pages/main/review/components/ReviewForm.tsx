@@ -71,7 +71,6 @@ const ReviewForm: React.FC = () => {
     const formMessage = {
       createDate,
       id,
-      projectName: '前端测试项目',
       errorDistName,
       reviewer,
       reviewerUserId,

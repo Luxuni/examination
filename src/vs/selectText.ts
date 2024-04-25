@@ -14,7 +14,7 @@ const CreateExamView = (
   let panel: vscode.WebviewPanel | undefined;
   const selectText = vscode.commands.registerCommand(
     'examination.selectText',
-    () => {
+    async () => {
       editor = vscode.window.activeTextEditor as vscode.TextEditor;
       if (editor) {
         const selection = editor.selection;
@@ -94,11 +94,11 @@ const CreateExamView = (
             projectName =
               JSON.parse(packageJsonBuffer.toString())?.name ?? '未知项目名';
             return packageJsonBuffer.toString();
-          } catch (error) {
+          } catch (error: any) {
             throw new Error(`Failed to read package.json: ${error.message}`);
           }
         }
-        readPackageJson();
+        await readPackageJson();
 
         const range = {
           moduleName: path.dirname(fileName)?.split('\\')?.reverse()[0],

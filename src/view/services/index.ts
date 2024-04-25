@@ -8,6 +8,7 @@ const url = {
   getCodeList: `${host}/getCodeList`,
   getTypeList: `${host}/getTypeList`,
   save: `${host}/save`,
+  delete: `${host}/delete`,
 };
 
 /**
@@ -52,4 +53,17 @@ const save = (data: Exclude<rangeState['range'], null>) => {
   });
 };
 
-export { getCodeList, getTypeList, getUserList, save };
+/*
+ * 删除问题
+ */
+const deleteCode = (
+  data: { idList: string[] },
+  params: { operator: number; type: 1 | 2 | 3 | 4 },
+) => {
+  return request.post(url.delete, {
+    data,
+    params,
+  });
+};
+
+export { deleteCode, getCodeList, getTypeList, getUserList, save };

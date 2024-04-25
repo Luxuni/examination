@@ -1,3 +1,4 @@
+import { Dropdown } from 'antd';
 import { useRef } from 'react';
 import TableRender, { TableContext } from 'table-render';
 import { selectusername } from '../../../features/userSlice';
@@ -8,6 +9,7 @@ import { createColumns } from './components/schema/table';
 const List: React.FC = () => {
   const tableRef = useRef<TableContext | null>(null);
   const userMessage = useAppSelector(selectusername);
+  const contextMenuRow = useRef<any>({});
 
   const getCodeListByPagingFactory =
     (type: 1 | 2 | 3 | 4) =>
@@ -25,6 +27,52 @@ const List: React.FC = () => {
 
   return (
     <TableRender
+      onRow={(record) => {
+        return {
+          onContextMenu: () => {
+            contextMenuRow.current = record;
+          },
+        };
+      }}
+      components={{
+        body: {
+          row: (props: any) => (
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    label: '定位',
+                    key: 'orientation',
+                  },
+                  {
+                    label: '删除',
+                    key: 'delete',
+                  },
+                ],
+                onClick: ({ key }) => {
+                  const { filePath, startLine, endLine } =
+                    contextMenuRow.current;
+                  switch (key) {
+                    case 'orientation':
+                      console.log('orientation', contextMenuRow.current);
+                      // @ts-ignore
+                      window.__vscode__.postMessage({
+                        command: 'position',
+                        text: `${filePath};,${startLine}-0;,${endLine}-0`,
+                      });
+                      break;
+                    default:
+                      break;
+                  }
+                },
+              }}
+              trigger={['contextMenu']}
+            >
+              <tr {...props} />
+            </Dropdown>
+          ),
+        },
+      }}
       ref={tableRef}
       request={[
         { name: '我的评审未修复', api: getCodeListByPagingFactory(3) },
@@ -32,7 +80,7 @@ const List: React.FC = () => {
         { name: '我的问题未修复', api: getCodeListByPagingFactory(1) },
         { name: '我的问题已修复', api: getCodeListByPagingFactory(2) },
       ]}
-      columns={createColumns(tableRef)}
+      columns={createColumns()}
     />
   );
 };

@@ -23,7 +23,9 @@ const MainFormFooter: React.FC = () => {
   };
 
   return (
-    <Row gutter={16} justify="end">
+    <Row gutter={16} justify="end" style={{
+      width: 'calc(200% + 36px)',
+    }}>
       <Col>
         <Button onClick={viewTheProblem}>查看问题</Button>
       </Col>

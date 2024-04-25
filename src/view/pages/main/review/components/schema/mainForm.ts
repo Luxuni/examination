@@ -58,6 +58,9 @@ const mainFormCreate = (
         props: {
           placeholder: '请输入评审意见',
           allowClear: true,
+          rows: 4,
+          minLength: 1,
+          maxLength: 200,
         },
         tooltip: {
           title: '请输入评审意见',
@@ -66,7 +69,7 @@ const mainFormCreate = (
         message: {
           required: '请输入评审意见',
         },
-        widget: 'input',
+        widget: 'textArea',
         cellSpan: 2,
       },
     },

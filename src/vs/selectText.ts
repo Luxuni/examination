@@ -85,7 +85,7 @@ const CreateExamView = (
         panel.webview.onDidReceiveMessage(
           async (message) => {
             switch (message.command) {
-              case 'reload':
+              case 'reload': {
                 const nonce = new Date().getTime() + '';
                 panel!.webview.html = getWebviewContent(
                   srcUrl,
@@ -96,25 +96,23 @@ const CreateExamView = (
                 panel!.webview.postMessage({ text, range });
                 vscode.window.showInformationMessage(message.text);
                 return;
+              }
               case 'already':
                 panel!.webview.postMessage({ userMessage });
                 panel!.webview.postMessage({ text, range });
                 vscode.window.showInformationMessage(message.text);
                 return;
-              case 'position':
-                console.log(message, 'message');
+              case 'position': {
                 const strArray = message.text.split(';,');
                 let filePath = strArray[0];
                 if (vscode.workspace.workspaceFolders) {
                   filePath =
                     vscode.workspace.workspaceFolders[0].uri.fsPath + filePath;
                 }
-
                 const doc = await vscode.workspace.openTextDocument(
                   vscode.Uri.parse('file:' + filePath),
                 );
                 await vscode.window.showTextDocument(doc, { preview: false });
-
                 const startChar = strArray[1].split('-');
                 const endChar = strArray[2].split('-');
                 const start = new vscode.Position(
@@ -125,12 +123,10 @@ const CreateExamView = (
                   Number(endChar[0]),
                   Number(endChar[1]),
                 );
-
                 if (vscode.window.activeTextEditor) {
                   editor = vscode.window.activeTextEditor;
                   editor.revealRange(new vscode.Range(start, end));
                 }
-
                 const hightlightCodes = (
                   startPos?: vscode.Position,
                   endPos?: vscode.Position,
@@ -139,22 +135,20 @@ const CreateExamView = (
                     vscode.window.createTextEditorDecorationType({
                       backgroundColor: { id: 'examination.codeBackground' },
                     });
-                  if (!startPos || !endPos) {
+                  let startPosCopy = startPos;
+                  let endPosCopy = endPos;
+                  if (!startPosCopy || !endPosCopy) {
                     const selection = editor.selection;
-                    startPos = selection.start;
-                    endPos = selection.end;
-                    console.log(startPos, endPos);
+                    startPosCopy = selection.start;
+                    endPosCopy = selection.end;
                   }
                   const decoration = {
-                    range: new vscode.Range(startPos, endPos),
+                    range: new vscode.Range(startPosCopy, endPosCopy),
                     hoverMessage: '此处添加了标注',
                   };
                   editor?.setDecorations(codeDecorationType, [decoration]);
                 };
-
-                console.log(start, end, filePath);
                 hightlightCodes(start, end);
-
                 vscode.commands.getCommands().then(async (res) => {
                   if (res.includes('gitlens.openWorkingFile')) {
                     vscode.commands.executeCommand(
@@ -168,6 +162,7 @@ const CreateExamView = (
                   }
                 });
                 return;
+              }
             }
           },
           undefined,

@@ -9,6 +9,7 @@ const url = {
   getTypeList: `${host}/getTypeList`,
   save: `${host}/save`,
   delete: `${host}/delete`,
+  fix: `${host}/fix`,
 };
 
 /**
@@ -62,4 +63,13 @@ const deleteCode = (data: { idList: number[] }) => {
   });
 };
 
-export { deleteCode, getCodeList, getTypeList, getUserList, save };
+/*
+ * 修复问题
+ */
+const fix = (data: { idList: number[] }) => {
+  return request.post(url.fix, {
+    data: data.idList,
+  });
+};
+
+export { deleteCode, fix, getCodeList, getTypeList, getUserList, save };

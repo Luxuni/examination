@@ -4,7 +4,7 @@ import TableRender, { TableContext } from 'table-render';
 import { rangeState } from '../../../features/rangeSlice';
 import { selectusername } from '../../../features/userSlice';
 import { useAppSelector } from '../../../hooks';
-import { deleteCode, getCodeList } from '../../../services';
+import { deleteCode, fix, getCodeList } from '../../../services';
 import { createColumns } from './components/schema/table';
 
 const ProblemTable: React.FC = () => {
@@ -52,6 +52,10 @@ const ProblemTable: React.FC = () => {
                       label: '删除',
                       key: 'delete',
                     },
+                    {
+                      label: '修复',
+                      key: 'fix',
+                    },
                   ],
                   onClick: ({ key }) => {
                     const { filePath, startLine, endLine } =
@@ -74,6 +78,21 @@ const ProblemTable: React.FC = () => {
                             idList: [contextMenuRow.current!.id],
                           });
                           message.success('删除成功');
+                          tableRef.current?.refresh();
+                        },
+                      });
+                    } else if (key === 'fix') {
+                      console.log('fix');
+                      modal.confirm({
+                        title: '修复',
+                        content: '确定修复该条问题吗？',
+                        okText: '确定',
+                        cancelText: '取消',
+                        onOk: async () => {
+                          await fix({
+                            idList: [contextMenuRow.current!.id],
+                          });
+                          message.success('修复成功');
                           tableRef.current?.refresh();
                         },
                       });

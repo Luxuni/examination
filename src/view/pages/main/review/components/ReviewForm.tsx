@@ -3,11 +3,10 @@ import FormRender, { useForm } from 'form-render';
 import moment from 'moment';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { changeList } from '../../../../features/listSlice';
 import { rangeState, selectRange } from '../../../../features/rangeSlice';
 import { selectUnikey } from '../../../../features/unikeySlice';
 import { selectusername } from '../../../../features/userSlice';
-import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { useAppSelector } from '../../../../hooks';
 import { Resource } from '../../../../resource';
 import { getTypeList, getUserList, save } from '../../../../services';
 import { Snowflake } from '../../../../utils';
@@ -43,7 +42,6 @@ const MainFormFooter: React.FC = () => {
 const userListResource = new Resource(getUserList());
 const typeListResource = new Resource(getTypeList());
 const ReviewForm: React.FC = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const range = useAppSelector(selectRange);
   const userMessage = useAppSelector(selectusername);
@@ -88,7 +86,6 @@ const ReviewForm: React.FC = () => {
 
     const res = Object.assign(formMessage, range);
     await save(res);
-    dispatch(changeList(res));
     message.success('提交成功');
     navigate('/table');
   };

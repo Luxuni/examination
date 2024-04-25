@@ -3,6 +3,12 @@ import { ProColumnsType } from 'table-render';
 
 export const createColumns = (): ProColumnsType => {
   return [
+    // 序号
+    {
+      title: '序号',
+      width: '80px',
+      render: (text: string, record: any, index: number) => `${index + 1}`,
+    },
     {
       title: '项目名称',
       dataIndex: 'projectName',

@@ -1,5 +1,4 @@
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit';
-import listReducer from '../features/listSlice';
 import rangeReducer from '../features/rangeSlice';
 import unikeyReducer from '../features/unikeySlice';
 import userReducer from '../features/userSlice';
@@ -9,7 +8,6 @@ export function makeStore() {
       unikey: unikeyReducer,
       user: userReducer,
       range: rangeReducer,
-      list: listReducer,
     },
   });
 }

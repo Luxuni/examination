@@ -1,4 +1,4 @@
-import { Dropdown, Modal, message } from 'antd';
+import { Alert, Dropdown, Modal, message } from 'antd';
 import { useRef } from 'react';
 import TableRender, { TableContext } from 'table-render';
 import { rangeState } from '../../../features/rangeSlice';
@@ -72,11 +72,7 @@ const List: React.FC = () => {
                         onOk: async () => {
                           await deleteCode(
                             {
-                              idList: [contextMenuRow.current!.id].map(String),
-                            },
-                            {
-                              operator: userMessage?.userId ?? 0,
-                              type: 3,
+                              idList: [contextMenuRow.current!.id],
                             },
                           );
                           message.success('删除成功');
@@ -93,6 +89,17 @@ const List: React.FC = () => {
             ),
           },
         }}
+        tableWrapper={(table) => (
+          <div>
+            <Alert
+              message="右键点击表格行可查看更多操作哦～"
+              type="warning"
+              closable
+              style={{ marginBottom: 16 }}
+            />
+            {table}
+          </div>
+        )}
         ref={tableRef}
         request={[
           { name: '我的评审未修复', api: getCodeListByPagingFactory(3) },

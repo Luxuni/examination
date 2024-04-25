@@ -56,13 +56,9 @@ const save = (data: Exclude<rangeState['range'], null>) => {
 /*
  * 删除问题
  */
-const deleteCode = (
-  data: { idList: string[] },
-  params: { operator: number; type: 1 | 2 | 3 | 4 },
-) => {
+const deleteCode = (data: { idList: number[] }) => {
   return request.post(url.delete, {
-    data,
-    params,
+    data: data.idList,
   });
 };
 

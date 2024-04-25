@@ -1,6 +1,6 @@
 import { RouteObject } from 'react-router-dom';
 import Main from '../pages/main';
-import List from '../pages/main/list';
+import ProblemTable from '../pages/main/problem_table';
 import Review from '../pages/main/review';
 
 const routerConfig: RouteObject[] = [
@@ -14,9 +14,9 @@ const routerConfig: RouteObject[] = [
         id: 'review',
       },
       {
-        path: 'about',
-        element: <List />,
-        id: 'list',
+        path: 'table',
+        element: <ProblemTable />,
+        id: 'problem_table',
       },
     ],
   },

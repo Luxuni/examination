@@ -20,7 +20,7 @@ type PickType = Pick<RangeType, 'authorUserId' | 'comment' | 'errorDistCode'>;
 const MainFormFooter: React.FC = () => {
   const navigate = useNavigate();
   const viewTheProblem = () => {
-    navigate('/about');
+    navigate('/table');
   };
 
   return (
@@ -90,7 +90,7 @@ const ReviewForm: React.FC = () => {
     await save(res);
     dispatch(changeList(res));
     message.success('提交成功');
-    navigate('/about');
+    navigate('/table');
   };
 
   return (

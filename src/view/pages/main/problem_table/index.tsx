@@ -7,7 +7,7 @@ import { useAppSelector } from '../../../hooks';
 import { deleteCode, getCodeList } from '../../../services';
 import { createColumns } from './components/schema/table';
 
-const List: React.FC = () => {
+const ProblemTable: React.FC = () => {
   const tableRef = useRef<TableContext | null>(null);
   const [modal, contextHolder] = Modal.useModal();
   const userMessage = useAppSelector(selectusername);
@@ -70,11 +70,9 @@ const List: React.FC = () => {
                         okText: '确定',
                         cancelText: '取消',
                         onOk: async () => {
-                          await deleteCode(
-                            {
-                              idList: [contextMenuRow.current!.id],
-                            },
-                          );
+                          await deleteCode({
+                            idList: [contextMenuRow.current!.id],
+                          });
                           message.success('删除成功');
                           tableRef.current?.refresh();
                         },
@@ -113,4 +111,4 @@ const List: React.FC = () => {
   );
 };
 
-export default List;
+export default ProblemTable;

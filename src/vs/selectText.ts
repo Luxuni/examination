@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import * as vscode from 'vscode';
 
@@ -71,6 +72,34 @@ const CreateExamView = (
           );
         }
         //const range = `${fileName};,${start.line}-${start.character};,${end.line}-${end.character}`;
+
+        let projectName: string = '未知项目名';
+        async function readPackageJson(): Promise<string> {
+          const workspaceFolder = vscode.workspace.getWorkspaceFolder(
+            editor.document.uri,
+          );
+
+          if (!workspaceFolder) {
+            throw new Error('No active workspace found');
+          }
+
+          const packageJsonPath = path.join(
+            workspaceFolder.uri.fsPath,
+            'package.json',
+          );
+
+          try {
+            const packageJsonBuffer =
+              await fs.promises.readFile(packageJsonPath);
+            projectName =
+              JSON.parse(packageJsonBuffer.toString())?.name ?? '未知项目名';
+            return packageJsonBuffer.toString();
+          } catch (error) {
+            throw new Error(`Failed to read package.json: ${error.message}`);
+          }
+        }
+        readPackageJson();
+
         const range = {
           moduleName: path.dirname(fileName)?.split('\\')?.reverse()[0],
           fileName: path.basename(fileName),
@@ -79,6 +108,7 @@ const CreateExamView = (
           startCharacter: start.character,
           endLine: end.line,
           endCharacter: end.character,
+          projectName,
         };
 
         panel!.webview.postMessage({ text: text, range: range });

@@ -23,9 +23,13 @@ const MainFormFooter: React.FC = () => {
   };
 
   return (
-    <Row gutter={16} justify="end" style={{
-      width: 'calc(200% + 36px)',
-    }}>
+    <Row
+      gutter={16}
+      justify="end"
+      style={{
+        width: 'calc(200% + 36px)',
+      }}
+    >
       <Col>
         <Button onClick={viewTheProblem}>查看问题</Button>
       </Col>
@@ -63,6 +67,10 @@ const ReviewForm: React.FC = () => {
         ?.dictName || '未知问题类型';
     const reviewer = userMessage?.label || '未知评审人';
     const reviewerUserId = userMessage?.userId || 0;
+    if (reviewerUserId === 0) {
+      message.error('请先选择您的身份信息！');
+      return;
+    }
     const author =
       userList?.find((el) => el.userId === formData.authorUserId)?.name ||
       '未知作者';
